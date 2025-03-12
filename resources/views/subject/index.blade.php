@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Teacher') }}
+            {{ __('Subject') }}
         </h2>
     </x-slot>
 
@@ -13,24 +13,20 @@
                         <thead>
                             <tr>
                                 <th class="px-4 py-2">No</th>
-                                <th class="px-4 py-2">Teacher's Name</th>
                                 <th class="px-4 py-2">Subject</th>
-                                @if (auth()->user()->hasRole('super-admin'))
+                                @can('add-subject' && 'edit-subject' && 'delete-subject')
                                     <th class="px-4 py-2">Action</th>
-                                @endif
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td class="border px-4 py-2">1</td>
-                                <td class="border px-4 py-2">Lorem ipsum dolor sit amet consectetur adipisicing elit</td>
                                 <td class="border px-4 py-2">Lorem ipsum dolor sit.</td>
-                                @if (auth()->user()->hasRole('super-admin'))
+                                @can('add-subject')
                                     <td class="border px-4 py-2">
-                                        <a href="{{ Route('teacher.create') }}">
-                                            <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Add
-                                            </button>
-                                        </a>
+                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Add
+                                        </button>
 
                                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Edit
                                         </button>
@@ -38,7 +34,7 @@
                                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Delete
                                         </button>
                                     </td>
-                                @endif
+                                @endcan
                             </tr>
                         </tbody>
                     </table>

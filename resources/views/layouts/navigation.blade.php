@@ -17,11 +17,21 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('teacher.index')" :active="request()->routeIs('teacher.index')">
-                        {{ __('Teacher') }}
-                    </x-nav-link>
-                </div>
+                @can('see-teacher')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('teacher.index')" :active="request()->routeIs('teacher.index')">
+                            {{ __('Teacher') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+
+                @can('see-subject')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('subject.index')" :active="request()->routeIs('subject.index')">
+                            {{ __('Subject') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
             </div>
 
             <!-- Settings Dropdown -->

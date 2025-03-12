@@ -31,13 +31,7 @@ class UserSeeder extends Seeder
         );
         $teacher->assignRole('teacher');
 
-        $student = User::create(
-            [
-                'name' => 'student',
-                'email' => 'student@gmail.com',
-                'password' => bcrypt('1234')
-            ]
-        );
-        $student->assignRole('student');
+        $teacher->givePermissionTo('see-subject');
+        $teacher->givePermissionTo('see-teacher');
     }
 }

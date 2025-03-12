@@ -42,6 +42,7 @@ class RegisteredUserController extends Controller
         ]);
 
         $user->givePermissionTo('see-teacher');
+        $user->givePermissionTo('see-subject');
 
         event(new Registered($user));
 
