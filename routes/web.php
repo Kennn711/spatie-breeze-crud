@@ -36,7 +36,11 @@ Route::put('teacher/update/{id}', [TeacherController::class, 'update'])->middlew
 // Teacher END
 
 // Subject
-Route::get('subject', [SubjectController::class, 'index'])->middleware(['auth', 'verified', 'role:student|teacher'])->name('subject.index');
+Route::get('subject', [SubjectController::class, 'index'])->middleware(['auth', 'verified', 'permission:see-subject'])->name('subject.index');
 Route::get('subject/create', [SubjectController::class, 'create'])->middleware(['auth', 'verified', 'permission:add-subject'])->name('subject.create');
+Route::post('subject/store', [SubjectController::class, 'store'])->middleware(['auth', 'verified', 'permission:add-subject'])->name('subject.store');
+Route::get('subject/edit/{id}', [SubjectController::class, 'edit'])->middleware(['auth', 'verified', 'permission:add-subject'])->name('subject.edit');
+Route::put('subject/update/{id}', [SubjectController::class, 'update'])->middleware(['auth', 'verified', 'permission:add-subject'])->name('subject.update');
+Route::delete('subject/delete/{id}', [SubjectController::class, 'destroy'])->middleware(['auth', 'verified', 'permission:add-subject'])->name('subject.destroy');
 // Subject End
 require __DIR__ . '/auth.php';

@@ -6,7 +6,7 @@
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <table class="table-auto mx-auto">
@@ -14,28 +14,45 @@
                             <tr>
                                 <th class="px-4 py-2">No</th>
                                 <th class="px-4 py-2">Subject</th>
-                                @can('add-subject' && 'edit-subject' && 'delete-subject')
+                                @if (auth()->user()->hasRole('super-admin'))
                                     <th class="px-4 py-2">Action</th>
-                                @endcan
+                                    <th class="px-4 py-2">
+                                        <a href="{{ Route('subject.create') }}">
+                                            <button class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Add
+                                            </button>
+                                        </a>
+                                    </th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="border px-4 py-2">1</td>
-                                <td class="border px-4 py-2">Lorem ipsum dolor sit.</td>
-                                @can('add-subject')
-                                    <td class="border px-4 py-2">
-                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Add
-                                        </button>
+                            @forelse ($subject as $see)
+                                <tr>
+                                    <td class="border px-4 py-2">{{ $loop->iteration }}</td>
+                                    <td class="border px-4 py-2">{{ $see->name }}</td>
+                                    @can('add-subject')
+                                        <td class="border px-4 py-2" colspan="{{ auth()->user()->hasRole('super-admin') ? 2 : 0 }}">
+                                            <div class="flex justify-between gap-2">
+                                                <a href="{{ Route('subject.edit', $see->id) }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Edit
+                                                </a>
 
-                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Edit
-                                        </button>
-
-                                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Delete
-                                        </button>
+                                                <form action="{{ Route('subject.destroy', $see->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-wides">Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    @endcan
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="{{ auth()->user()->hasRole('super-admin') ? 4 : 2 }}" class="text-center py-4">
+                                        No subjects available.
                                     </td>
-                                @endcan
-                            </tr>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

@@ -22,7 +22,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'subject_id',
     ];
+
+    public function subject()
+    {
+        return $this->hasOne(Subject::class, 'id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.

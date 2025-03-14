@@ -13,6 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        // Admin 
         $superAdmin = User::create(
             [
                 'name' => 'super-admin',
@@ -21,7 +22,19 @@ class UserSeeder extends Seeder
             ]
         );
         $superAdmin->assignRole('super-admin');
+        $superAdmin->givePermissionTo('add-teacher');
+        $superAdmin->givePermissionTo('edit-teacher');
+        $superAdmin->givePermissionTo('delete-teacher');
+        $superAdmin->givePermissionTo('see-teacher');
 
+        $superAdmin->givePermissionTo('add-subject');
+        $superAdmin->givePermissionTo('edit-subject');
+        $superAdmin->givePermissionTo('delete-subject');
+        $superAdmin->givePermissionTo('see-subject');
+        // Admin END
+
+
+        // Teacher
         $teacher = User::create(
             [
                 'name' => 'teacher',
@@ -30,8 +43,8 @@ class UserSeeder extends Seeder
             ]
         );
         $teacher->assignRole('teacher');
-
         $teacher->givePermissionTo('see-subject');
         $teacher->givePermissionTo('see-teacher');
+        // Teacher END
     }
 }

@@ -31,26 +31,5 @@ class RolePermissionSeeder extends Seeder
         Role::create(['name' => 'super-admin']);
         Role::create(['name' => 'teacher']);
         // Role End
-
-
-        // Admin
-        $roleAdmin = Role::findByName('super-admin');
-        $roleAdmin->givePermissionTo('add-teacher');
-        $roleAdmin->givePermissionTo('edit-teacher');
-        $roleAdmin->givePermissionTo('delete-teacher');
-        $roleAdmin->givePermissionTo('see-teacher');
-
-        $roleAdmin->givePermissionTo('add-subject');
-        $roleAdmin->givePermissionTo('edit-subject');
-        $roleAdmin->givePermissionTo('delete-subject');
-        $roleAdmin->givePermissionTo('see-subject');
-        // Admin END
-
-
-        // Teacher
-        $roleTeacher = Role::findByName('teacher');
-        $roleTeacher->givePermissionTo('see-subject');
-        $roleTeacher->givePermissionTo('see-teacher');
-        // Teacher END
     }
 }
