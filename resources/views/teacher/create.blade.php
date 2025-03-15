@@ -26,31 +26,30 @@
                         <div class="mb-4">
                             <label class="block text-gray-700 text-md font-bold mb-3">Subjects : </label>
                             <div class="grid gap-2">
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" name="subjects[]" value="Math" class="form-checkbox"> <span class="ml-2">Math</span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" name="subjects[]" value="Science" class="form-checkbox"> <span class="ml-2">Science</span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" name="subjects[]" value="English" class="form-checkbox"> <span class="ml-2">English</span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" name="subjects[]" value="History" class="form-checkbox"> <span class="ml-2">History</span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" name="subjects[]" value="Geography" class="form-checkbox"> <span class="ml-2">Geography</span>
-                                </label>
-                                <label class="inline-flex items-center">
-                                    <input type="checkbox" name="subjects[]" value="Physics" class="form-checkbox"> <span class="ml-2">Physics</span>
-                                </label>
+                                @forelse ($subject as $see)
+                                    <label class="inline-flex items-center">
+                                        <input type="checkbox" name="subject[]" value="{{ $see->id }}" class="form-checkbox"> <span class="ml-2">{{ $see->name }}</span>
+                                    </label>
+                                @empty
+                                    <label class="inline-flex items-center">
+                                        <span class="font-bold">No subject available</span>
+                                    </label>
+                                @endforelse
                             </div>
                         </div>
-                        <div class="flex items-center justify-between">
-                            <button type="submit" class="bg-gray-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                                Submit
-                            </button>
-                        </div>
+                        @if (empty($see))
+                            <div class="flex items-center justify-between">
+                                <a href="{{ Route('teacher.index') }}" class="bg-gray-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                    Return
+                                </a>
+                            </div>
+                        @else
+                            <div class="flex items-center justify-between">
+                                <button type="submit" class="bg-gray-800 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                    Submit
+                                </button>
+                            </div>
+                        @endif
                     </form>
                 </div>
             </div>

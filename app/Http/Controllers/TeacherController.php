@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Subject;
+use App\Models\TeacherAssigment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,18 +27,30 @@ class TeacherController extends Controller
 
     public function store(Request $request)
     {
-        $validation = $request->validate([
-            'name' => 'required|min:3',
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'password' => 'required|min:8',
-            'subject_id' => 'required',
-        ]);
 
+        $validation = $request->validate([
+            'name' => 'required',
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => 'required',
+            'subject.*' => 'required',
+        ]);
         $validation['password'] = Hash::make($request->password);
 
-        User::create($validation);
+        $subjectId = $request->input('subject');
+        unset($validation['subject']);
 
-        return redirect()->route('subject.index');
+        $teacher = User::create($validation);
+
+        if (!empty($subjectId)) {
+            foreach ($subjectId as $see) {
+                TeacherAssigment::create([
+                    'teacher_id' => $teacher->id,
+                    'subject_id' => $see
+                ]);
+            }
+        }
+
+        return redirect()->route('teacher.index');
     }
 
     public function edit($id)

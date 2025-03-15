@@ -29,7 +29,7 @@ Route::get('admin', [SuperAdminController::class, 'index'])->middleware(['auth',
 // Teacher
 Route::get('teacher', [TeacherController::class, 'index'])->middleware(['auth', 'verified', 'role_or_permission:see-teacher|teacher|super-admin'])->name('teacher.index');
 Route::get('teacher/create', [TeacherController::class, 'create'])->middleware(['auth', 'verified', 'permission:add-teacher'])->name('teacher.create');
-Route::post('teacher/create', [TeacherController::class, 'store'])->middleware(['auth', 'verified', 'permission:add-teacher'])->name('teacher.store');
+Route::post('teacher/store', [TeacherController::class, 'store'])->middleware(['auth', 'verified', 'permission:add-teacher'])->name('teacher.store');
 Route::get('teacher/edit/{id}', [TeacherController::class, 'edit'])->middleware(['auth', 'verified', 'permission:edit-teacher'])->name('teacher.edit');
 Route::delete('teacher/destroy/{id}', [TeacherController::class, 'destroy'])->middleware(['auth', 'verified', 'permission:delete-teacher'])->name('teacher.destroy');
 Route::put('teacher/update/{id}', [TeacherController::class, 'update'])->middleware(['auth', 'verified', 'permission:edit-teacher'])->name('teacher.update');
