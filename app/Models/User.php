@@ -26,9 +26,8 @@ class User extends Authenticatable
 
     public function subject()
     {
-        return $this->hasOne(Subject::class, 'id');
+        return $this->hasMany(Subject::class);
     }
-
     /**
      * The attributes that should be hidden for serialization.
      *

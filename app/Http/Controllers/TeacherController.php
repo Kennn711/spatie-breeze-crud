@@ -14,7 +14,9 @@ class TeacherController extends Controller
     public function index()
     {
         return view('teacher.index', [
-            'teacher' => User::with('subject')->role('teacher')->get(),
+            'teacher' => TeacherAssigment::with(['teacher', 'subject'])
+                ->get()
+                ->groupBy('teacher_id')
         ]);
     }
 
@@ -40,6 +42,7 @@ class TeacherController extends Controller
         unset($validation['subject']);
 
         $teacher = User::create($validation);
+        $teacher->assignRole('teacher');
 
         if (!empty($subjectId)) {
             foreach ($subjectId as $see) {
